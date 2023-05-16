@@ -60,8 +60,8 @@ function Dashboard() {
           <Col xs={12} md={4}>
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Global Sales</h5>
-                <CardTitle tag="h4">Shipped Products</CardTitle>
+                <h5 className="card-category">Self Wedding</h5>
+                <CardTitle tag="h4">셀프 웨딩</CardTitle>
                 <UncontrolledDropdown>
                   <DropdownToggle
                     className="btn-round btn-outline-default btn-icon"
@@ -99,8 +99,8 @@ function Dashboard() {
             <Card className="card-chart">
               <CardHeader>
                 <h2>백엔드에서 가져온 데이터입니다 : {hello}</h2>
-                <h5 className="card-category">2021 Sales</h5>
-                <CardTitle tag="h4">All products</CardTitle>
+                <h5 className="card-category">body profile</h5>
+                <CardTitle tag="h4">바디 프로필</CardTitle>
                 <UncontrolledDropdown>
                   <DropdownToggle
                     className="btn-round btn-outline-default btn-icon"
@@ -137,8 +137,8 @@ function Dashboard() {
           <Col xs={12} md={4}>
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Email Statistics</h5>
-                <CardTitle tag="h4">24 Hours Performance</CardTitle>
+                <h5 className="card-category">Self Photo</h5>
+                <CardTitle tag="h4">개인촬영</CardTitle>
               </CardHeader>
               <CardBody>
                 <div className="chart-area">

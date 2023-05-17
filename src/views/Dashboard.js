@@ -98,7 +98,7 @@ function Dashboard() {
           <Col xs={12} md={4}>
             <Card className="card-chart">
               <CardHeader>
-                <h2>백엔드에서 가져온 데이터입니다 : {hello}</h2>
+                {/* <h2>백엔드에서 가져온 데이터입니다 : {hello}</h2> */}
                 <h5 className="card-category">body profile</h5>
                 <CardTitle tag="h4">바디 프로필</CardTitle>
                 <UncontrolledDropdown>

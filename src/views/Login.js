@@ -11,7 +11,8 @@ import {
   Form,
   Input,
   Row,
-  Col
+  Col,
+  Label
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -89,9 +90,20 @@ function Login() {
                       </FormGroup>
                     </Col>
                   </Row>
+
+                  <FormGroup check>
+                    <Label check>
+                    <span>아이디 저장</span>
+                      <Input type="checkbox" />
+                      <span className="form-check-sign" />
+                    </Label>
+                  </FormGroup>
+
+                  <br />
                   {/* 🖤🩷 */}
                   {/* 좋아요 테스트 */}
                   <span onClick={clickLike}>🖤</span> {like}  <br />
+                  
                   <Button variant="info" onClick={clickLogin} >로그인</Button>
                   <Button variant="info" onClick={clickJoin}>회원가입</Button>
                 </Form>

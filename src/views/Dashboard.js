@@ -46,7 +46,7 @@ function Dashboard() {
 
   return (
     <>
-      <PanelHeader
+      {/* <PanelHeader
         size="lg"
         content={
           <Line
@@ -54,7 +54,8 @@ function Dashboard() {
             options={dashboardPanelChart.options}
           />
         }
-      />
+      /> */}
+      <PanelHeader size="sm" />
       <div className="content">
         <Row>
           <Col xs={12} md={4}>
@@ -161,7 +162,7 @@ function Dashboard() {
             <Card className="card-tasks">
               <CardHeader>
                 <h5 className="card-category">Backend Development</h5>
-                <CardTitle tag="h4">Tasks</CardTitle>
+                <CardTitle tag="h4">게시판</CardTitle>
               </CardHeader>
               <CardBody>
                 <div className="table-full-width table-responsive">

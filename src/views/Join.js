@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 // reactstrap components
 import {
@@ -16,13 +17,36 @@ import {
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
+
 function Join() {
+
+  const [role, setRole] = useState([]);
+  const roleList = [
+    {name : '개인',
+    value : 1},
+    {name : '사진작가',
+    value :2}];
+
+  const chgRole = (e) => {
+    console.log(e.target.value)
+    alert(e.target.value)
+    setRole(e.target.value);
+  }
+
+  const clickJoin = () => {
+    alert('가입');
+    // const request = axios.post('/signUp', data)
+    // .then(res --> alert(res.data));
+  };
+
   return (
+    
+
     <>
       <PanelHeader size="sm" />
       <div className="content">
         <Row>
-          <Col md="8">
+          <Col className="pr-1" >
             <Card>
               <CardHeader>
                 <h5 className="title">회원가입</h5>
@@ -30,176 +54,148 @@ function Join() {
               <CardBody>
                 <Form>
                   <Row>
-                    {/* <Col className="pr-1" md="5">
+                    <Col className="pr-1" md="4">
                       <FormGroup>
-                        <label>아이디</label>
-                        <Input
-                          defaultValue="Creative Code Inc."
-                          disabled
-                          placeholder="Company"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col> */}
-                    <Col className="px-1" md="3">
-                      <FormGroup>
-                        <label>Username</label>
+                        <label>이름</label>
                         <Input
                           defaultValue=""
-                          placeholder="Username"
+                          placeholder="name"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-1" md="4">
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
                       <FormGroup>
                         <label htmlFor="exampleInputEmail1">
-                          Email address
+                          Email
                         </label>
                         <Input placeholder="Email" type="email" />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="6">
-                      <FormGroup>
-                        <label>First Name</label>
-                        <Input
-                          defaultValue="Mike"
-                          placeholder="Company"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <FormGroup>
-                        <label>Last Name</label>
-                        <Input
-                          defaultValue="Andrew"
-                          placeholder="Last Name"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <FormGroup>
-                        <label>Address</label>
-                        <Input
-                          defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                          placeholder="Home Address"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
                     <Col className="pr-1" md="4">
                       <FormGroup>
-                        <label>City</label>
+                        <label>비밀번호</label>
                         <Input
-                          defaultValue="Mike"
-                          placeholder="City"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="px-1" md="4">
-                      <FormGroup>
-                        <label>Country</label>
-                        <Input
-                          defaultValue="Andrew"
-                          placeholder="Country"
-                          type="text"
+                          defaultValue=""
+                          placeholder="password"
+                          type="password"
                         />
                       </FormGroup>
                     </Col>
                     <Col className="pl-1" md="4">
                       <FormGroup>
-                        <label>Postal Code</label>
-                        <Input placeholder="ZIP Code" type="number" />
+                        <label>비밀번호 확인</label>
+                        <Input
+                          defaultValue=""
+                          placeholder="password"
+                          type="password"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="6">
+                      <FormGroup>
+                        <label>전화번호</label>
+                        <Input
+                          defaultValue=""
+                          placeholder="phoneNumber"
+                          type="password"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pl-1" md="2">
+                      <FormGroup>
+                        <label></label>
+                      <a
+                        // href="javascript:alert('구현예정')"
+                        // href="https://demos.creative-tim.com/now-ui-dashboard-react/#/documentation/tutorial?ref=nudr-fixed-plugin"
+                        className="btn btn-block btn-round btn-info"> 
+                        번호인증
+                      </a>
+                        
+                      </FormGroup>
+                    </Col>
+                    
+                  </Row>
+                  <Row>
+                    <Col md="6">
+                      <FormGroup>
+                        <label>주소</label>
+                        <Input
+                          defaultValue=""
+                          placeholder="Home Address"
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pl-0" md="2">
+                      <FormGroup>
+                        <label></label>
+                      <a 
+                        href="javascript:alert('구현예정')"
+                        className="btn btn-block btn-round btn-info"> 
+                        주소찾기
+                      </a>
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
                     <Col md="12">
+                      
                       <FormGroup>
-                        <label>About Me</label>
+                        <label>역할</label>
+                        <div>
+                        {/* 라디오 버튼 */}
+                        &nbsp;&nbsp;&nbsp;
+                        {
+                          roleList.map(list =>(
+                            <label key={list.name}>
+                              <input
+                                type="radio"
+                                value={list.value}
+                                checked={role === `${list.value}`}
+                                onChange={chgRole}
+                              />
+                              &nbsp;
+                              {list.name} 
+                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                          ))
+                        }
+                        </div>
+                      </FormGroup>
+                      
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <FormGroup>
+                        <label>약관동의</label>
                         <Input
                           cols="80"
-                          defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in
-                            that two seat Lambo."
-                          placeholder="Here can be your description"
+                          defaultValue="약관동의 안하면 가입 못해용"
                           rows="4"
+                          disabled
                           type="textarea"
                         />
                       </FormGroup>
                     </Col>
                   </Row>
                 </Form>
-                <Button variant="info">회원가입</Button>
+                {/* <Button variant="info" onClick={clickJoin}>회원가입</Button> */}
+                <button onClick={clickJoin} className="btn btn-primary btn-block btn-round">
+                  회원가입 
+                </button>
               </CardBody>
               
             </Card>
           </Col>
-          <Col md="4">
-            <Card className="card-user">
-              <div className="image">
-                <img alt="..." src={require("assets/img/bg5.jpg").default} />
-              </div>
-              <CardBody>
-                <div className="author">
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
-                      alt="..."
-                      className="avatar border-gray"
-                      src={require("assets/img/mike.jpg").default}
-                    />
-                    <h5 className="title">Mike Andrew</h5>
-                  </a>
-                  <p className="description">michael24</p>
-                </div>
-                <p className="description text-center">
-                  "Lamborghini Mercy <br />
-                  Your chick she so thirsty <br />
-                  I'm in that two seat Lambo"
-                </p>
-                
-              </CardBody>
-              <hr />
-              <div className="button-container">
-                <Button
-                  className="btn-neutral btn-icon btn-round"
-                  color="default"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  size="lg"
-                >
-                  <i className="fab fa-facebook-f" />
-                </Button>
-                <Button
-                  className="btn-neutral btn-icon btn-round"
-                  color="default"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  size="lg"
-                >
-                  <i className="fab fa-twitter" />
-                </Button>
-                <Button
-                  className="btn-neutral btn-icon btn-round"
-                  color="default"
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  size="lg"
-                >
-                  <i className="fab fa-google-plus-g" />
-                </Button>
-              </div>
-              
-            </Card>
-          </Col>
+         
           
         </Row>
         

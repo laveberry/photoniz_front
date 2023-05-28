@@ -46,7 +46,7 @@ function Sidebar(props) {
           className="simple-text logo-normal"
           // target="_blank"
         >
-          Creative Tim
+          포토니즈 (PHOTONIZ)
         </a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>

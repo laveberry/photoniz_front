@@ -12,6 +12,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
+import root from "root.js"
 
 var ps;
 
@@ -41,7 +42,7 @@ function Admin(props) {
   };
   return (
     <div className="wrapper">
-      <Sidebar {...props} routes={routes} backgroundColor={backgroundColor} />
+      <Sidebar {...props} routes={root} backgroundColor={backgroundColor} />
       <div className="main-panel" ref={mainPanel}>
         <DemoNavbar {...props} />
         <Switch>

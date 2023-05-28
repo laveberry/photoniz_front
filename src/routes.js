@@ -9,6 +9,7 @@ import UserPage from "views/UserPage.js";
 import MyPage from "views/MyPage";
 import Join from "views/Join";
 import Login from "views/Login";
+import Developer from "views/Developer";
 
 var dashRoutes = [
   {
@@ -86,6 +87,13 @@ var dashRoutes = [
     icon: "objects_spaceship",
     component: Upgrade,
     layout: "/admin"
-  }
+  },  
+  {
+    path: "/developer",
+    name: "개발자",
+    component: Developer,
+    layout: "/admin"
+  },
+
 ];
 export default dashRoutes;

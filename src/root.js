@@ -5,6 +5,8 @@ import Typography from "views/Typography.js";
 import TableList from "views/TableList.js";
 import Maps from "views/Maps.js";
 import UserPage from "views/UserPage.js";
+import Developer from "views/Developer";
+
 
 // 사이드바 루트
 var Root = [
@@ -13,6 +15,13 @@ var Root = [
     name: "Main",
     icon: "design_app",
     component: Dashboard,
+    layout: "/admin"
+  },
+  {
+    path: "/developer",
+    name: "개발자",
+    icon: "location_map-big",
+    component: Developer,
     layout: "/admin"
   },
   {

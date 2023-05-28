@@ -45,7 +45,7 @@ function Join() {
                       <FormGroup>
                         <label>Username</label>
                         <Input
-                          defaultValue="michael23"
+                          defaultValue=""
                           placeholder="Username"
                           type="text"
                         />
@@ -138,7 +138,9 @@ function Join() {
                     </Col>
                   </Row>
                 </Form>
+                <Button variant="info">회원가입</Button>
               </CardBody>
+              
             </Card>
           </Col>
           <Col md="4">
@@ -163,6 +165,7 @@ function Join() {
                   Your chick she so thirsty <br />
                   I'm in that two seat Lambo"
                 </p>
+                
               </CardBody>
               <hr />
               <div className="button-container">
@@ -194,9 +197,12 @@ function Join() {
                   <i className="fab fa-google-plus-g" />
                 </Button>
               </div>
+              
             </Card>
           </Col>
+          
         </Row>
+        
       </div>
     </>
   );

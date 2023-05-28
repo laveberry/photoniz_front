@@ -161,14 +161,6 @@ function DemoNavbar(props) {
               </DropdownMenu>
             </Dropdown>
             <NavItem>
-              <Link to="/admin/join" className="nav-link">
-                <i className="now-ui-icons users_single-02" />
-                <p>
-                  <span className="d-lg-none d-md-block">Account</span>
-                </p>
-              </Link>
-            </NavItem>
-            <NavItem>
               <Link to="/admin/login" className="nav-link">
                 <i className="now-ui-icons users_single-02" />
                 <p>

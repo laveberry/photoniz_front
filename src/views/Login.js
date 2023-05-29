@@ -49,9 +49,17 @@ function Login() {
 
   const callLogin = () => {
     let body = {email : id, password : pw};
-    axios.post("/v1/user/signUp", body)
-    .then(res --> alert(res))
-    .catch(err --> alert("오류" + err));
+    axios.post("/v1/user/signIn", body)
+    .then(res => {
+      if(res.status===200){
+        alert('로그인 성공');
+      }else{
+        alert("성공예외" + res.status);
+        console.log(res);
+      }
+    }).catch(err => {
+      alert("로그인실패" + err);
+    });
   };
 
 
@@ -100,7 +108,7 @@ function Login() {
                         <Input
                           defaultValue=""
                           placeholder="비밀번호"
-                          type="text"
+                          type="password"
                           onChange={chgPw}
                         />
                       </FormGroup>

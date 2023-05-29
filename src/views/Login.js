@@ -23,23 +23,37 @@ function Login() {
 
   // const navigate = useNavigate();
 
-  const [inputId, setInputId] = useState('')
-  const [inputPw, setInputPw] = useState('')
+  const [id, setId] = useState('')
+  const [pw, setPw] = useState('')
 
 
   //input data 변화시 value값 변경하여 useState
-  const handleInputId = (e) => {
-    setInputId(e.target.value)
+  const chgId = (e) => {
+    setId(e.target.value)
   }
 
-  const handleInputPw = (e) => {
-    setInputPw(e.target.value)
+  const chgPw = (e) => {
+    setPw(e.target.value)
   }
 
   //login버튼 클릭
-  const clickLogin = () => {
-    alert('로그인 클릭')
-  }
+  const chkValidation = () => {
+    //validation체크
+    if(id ==="" || pw === "") {
+      alert("이메일과 비밀번호를 입력해주세요");
+      return;
+    }
+    // dispatchEvent()
+    callLogin();
+  };
+
+  const callLogin = () => {
+    let body = {email : id, password : pw};
+    axios.post("/v1/user/signUp", body)
+    .then(res --> alert(res))
+    .catch(err --> alert("오류" + err));
+  };
+
 
   const clickJoin = (e) => {
     window.location.href = "/admin/join"
@@ -75,6 +89,7 @@ function Login() {
                           defaultValue=""
                           placeholder="아이디"
                           type="text"
+                          onChange={chgId}
                         />
                       </FormGroup>
                     </Col>
@@ -86,6 +101,7 @@ function Login() {
                           defaultValue=""
                           placeholder="비밀번호"
                           type="text"
+                          onChange={chgPw}
                         />
                       </FormGroup>
                     </Col>
@@ -104,7 +120,7 @@ function Login() {
                   {/* 좋아요 테스트 */}
                   <span onClick={clickLike}>🖤</span> {like}  <br />
                   
-                  <Button variant="info" onClick={clickLogin} >로그인</Button>
+                  <Button variant="info" onClick={chkValidation} >로그인</Button>
                   <Button variant="info" onClick={clickJoin}>회원가입</Button>
                 </Form>
               </CardBody>

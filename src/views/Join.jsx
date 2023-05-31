@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
-// reactstrap components
+import { useForm } from "react-hook-form";
 import {
   Button,
   Card,
@@ -14,11 +12,14 @@ import {
   Col
 } from "reactstrap";
 
-// core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
-
 function Join() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
 
   const [role, setRole] = useState([]);
   const roleList = [
@@ -40,9 +41,12 @@ function Join() {
   };
 
   return (
-    
-
-    <>
+    <form
+      onSubmit={handleSubmit(async (data) => {
+        await new Promise((r) => setTimeout(r, 1000));
+        alert(JSON.stringify(data));
+      })}
+    >
       <PanelHeader size="sm" />
       <div className="content">
         <Row>
@@ -188,7 +192,7 @@ function Join() {
                   </Row>
                 </Form>
                 {/* <Button variant="info" onClick={clickJoin}>회원가입</Button> */}
-                <button onClick={clickJoin} className="btn btn-primary btn-block btn-round">
+                <button type="submit"  className="btn btn-primary btn-block btn-round">
                   회원가입 
                 </button>
               </CardBody>
@@ -200,7 +204,8 @@ function Join() {
         </Row>
         
       </div>
-    </>
+
+    </form>
   );
 }
 

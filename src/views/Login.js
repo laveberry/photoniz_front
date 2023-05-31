@@ -14,7 +14,6 @@ import {
   Col,
   Label
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
 
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";

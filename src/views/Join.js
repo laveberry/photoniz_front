@@ -18,17 +18,17 @@ import {
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
 function Join(
-  {
-  onSubmit = async (data) => {
-    // alert(1111);
-    // await new Promise((r) => setTimeout(r, 1000));
-    // alert("온서브밋");
-    console.log("data임다", JSON.stringify(data));
+//   {
+//   onSubmit = async (data) => {
+//     alert(1111);
+//     // await new Promise((r) => setTimeout(r, 1000));
+//     // alert("온서브밋");
+//     console.log("data임다", JSON.stringify(data));
 
-    const request = axios.post('/signUp', data)
-    .then(res --> alert(res.data));
-  }
-}
+//     const request = axios.post('/signUp', data)
+//     .then(res --> alert(res.data));
+//   }
+// }
 ) {
 
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ function Join(
   };
 
   const chgName = (e) => {
-    setName(e.target.name);
+    setName(e.target.value);
   };
 
   const chgEmail = (e) => {
@@ -74,9 +74,6 @@ function Join(
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    alert("체크");
-    alert("pass" + password);
-    alert("con" + confirmPassword);
     if(password != confirmPassword){
       return alert("비밀번호가 같지 않습니다.");
     }
@@ -84,24 +81,38 @@ function Join(
     let body = {
       email : email,
       name : name,
-      password : password
+      password : password,
+      phone : phone
     }
-
-    dispatch(registerUser(body)).then(response => {
-      alert("응답");
-      if(response.payload.success){
-        alert("성공");
-
+    const request = axios.post('/v1/user/signUp', body)
+    .then(res => {
+      console.log(res);
+      if(res.status==200){
+        alert("회원가입 성공. 다시 로그인 해주세요");
+        location.href = "/admin/login";
       }else{
-        alert("error");
+        alert("회원가입 예외" + res.status);
       }
-    })
+    }).catch(err => {
+      console.log(err);
+      alert(err.response.data.message);
+    });
+
+    // dispatch(registerUser(body)).then(response => {
+    //   alert("응답");
+    //   if(response.payload.success){
+    //     alert("성공");
+
+    //   }else{
+    //     alert("error");
+    //   }
+    // })
   }
 
-  function registerUser(submitData){
-    const request = axios.post("/api/user/join", submitData)
-    .then(response => response.data);
-  }
+  // function registerUser(submitData){
+  //   const request = axios.post("/api/user/join", submitData)
+  //   .then(response => response.data);
+  // }
 
   return (
     <>
@@ -114,7 +125,7 @@ function Join(
                 <h5 className="title">회원가입</h5>
               </CardHeader>
               <CardBody>
-                <Form onSubmit={onSubmit}>
+                <Form onSubmit={onSubmitHandler}>
                   <Row>
                     <Col className="pr-1" md="4">
                       <FormGroup>

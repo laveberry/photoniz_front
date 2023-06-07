@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 // reactstrap components
 import {
@@ -21,6 +22,7 @@ import PanelHeader from "components/PanelHeader/PanelHeader.js";
 function Login() {
 
   // const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [id, setId] = useState('')
   const [pw, setPw] = useState('')
@@ -46,12 +48,20 @@ function Login() {
     callLogin();
   };
 
+  // const 꺼내온거 = useSelector((state)=> state);
+  // const test = () => {
+  //   console.log(꺼내온거)
+  //   alert(꺼내온거);
+  // }
+
   const callLogin = () => {
     let body = {email : id, password : pw};
     axios.post("/v1/user/signIn", body)
     .then(res => {
       if(res.status===200){
+        console.log("res", res);
         alert('로그인 성공');
+        dispatch({type:'SET_TOKEN', token : res.data.data.token, result : true});
       }else{
         alert("성공예외" + res.status);
         console.log(res);

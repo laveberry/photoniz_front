@@ -18,9 +18,12 @@ import {
 
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
+import { UserDataAction } from "_reducers/actionCreators";
+
 
 function Login() {
 
+  let state = useSelector((state)=>{return state})
   // const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -60,8 +63,32 @@ function Login() {
     .then(res => {
       if(res.status===200){
         console.log("res", res);
+        
+        // UserDataAction.modifyUserData({
+        //   name,
+        //   job,
+        //   email,
+        //   phone
+        // })
+
+        UserDataAction.initUserData()
+        const result = res.data.data;
+        UserDataAction.login({
+          token : result.token,
+          email : result.email,
+          authenticated : result.result
+        })
+
+        console.log("userData", userData);
+
+        //로컬스토리지 저장
+        localStorage.clear()
+        localStorage.setItem('email', res.data.data.email)
+        localStorage.setItem('token', res.data.data.token)
+        // window.location.replace('/')
+
         alert('로그인 성공');
-        dispatch({type:'SET_TOKEN', token : res.data.data.token, result : true});
+        // dispatch({type:'SET_TOKEN', token : res.data.data.token, result : true});
       }else{
         alert("성공예외" + res.status);
         console.log(res);
@@ -71,7 +98,7 @@ function Login() {
     });
   };
 
-
+  
   const clickJoin = (e) => {
     window.location.href = "/admin/join"
   }
@@ -81,10 +108,11 @@ function Login() {
   const clickLike = () => {
     chgLike(like+1);
   }
-
+  const userData = useSelector(store => store.userData)
   //페이지 렌더링 후 가장 처음 호출되는 함수
   useEffect(() => {
-    // axios.get()
+    //store 데이터 가져오기
+    console.log("userData", userData);
   })
 
   return (

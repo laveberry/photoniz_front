@@ -19,13 +19,15 @@ import {
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 import { UserDataAction } from "_reducers/actionCreators";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 function Login() {
-
+  // redux - 새로고침시 데이터 초기화
   let state = useSelector((state)=>{return state})
   // const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const history = useHistory();
 
   const [id, setId] = useState('')
   const [pw, setPw] = useState('')
@@ -81,7 +83,7 @@ function Login() {
 
         console.log("userData", userData);
 
-        //로컬스토리지 저장
+        //로컬스토리지 저장(새로고침 초기화x)
         localStorage.clear()
         localStorage.setItem('email', res.data.data.email)
         localStorage.setItem('token', res.data.data.token)
@@ -100,7 +102,7 @@ function Login() {
 
   
   const clickJoin = (e) => {
-    window.location.href = "/admin/join"
+    history.push("/admin/join")
   }
 
   // 좋아요 테스트
@@ -111,8 +113,14 @@ function Login() {
   const userData = useSelector(store => store.userData)
   //페이지 렌더링 후 가장 처음 호출되는 함수
   useEffect(() => {
+    console.log("state ", state.userData);
     //store 데이터 가져오기
     console.log("userData", userData);
+    if(localStorage.getItem("token")!=null){
+    // if(userData.token!='') {
+      // alert("이미 로그인 상태입니다.");
+      history.push("/")
+    }
   })
 
   return (

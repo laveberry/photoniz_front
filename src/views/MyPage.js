@@ -13,12 +13,15 @@ import {
   Col
 } from "reactstrap";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
 function MyPage() {
+
+  const history = useHistory();
+
   return (
     <>
       <PanelHeader size="sm" />
@@ -127,6 +130,11 @@ function MyPage() {
                   <Row>
                     <Col md="12">
                       <FormGroup>
+                      <Button variant="info" onClick={()=>{
+                        localStorage.clear()
+                        alert("로그아웃 되었습니다.")
+                        history.push("/")
+                      }} >로그아웃</Button>
                         <label>About Me</label>
                         <Input
                           cols="80"

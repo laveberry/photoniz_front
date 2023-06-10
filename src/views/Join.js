@@ -34,6 +34,7 @@ function Join(
   const dispatch = useDispatch();
   
   const [name, setName] = useState("");
+  const [nickName, setNicName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -56,6 +57,10 @@ function Join(
 
   const chgName = (e) => {
     setName(e.target.value);
+  };
+
+  const chgNickName = (e) => {
+    setNicName(e.target.value);
   };
 
   const chgEmail = (e) => {
@@ -81,6 +86,7 @@ function Join(
     let body = {
       email : email,
       name : name,
+      nickName : nickName,
       password : password,
       phone : phone
     }
@@ -138,14 +144,26 @@ function Join(
                         />
                       </FormGroup>
                     </Col>
+                    <Col className="pl-1" md="4">
+                      <FormGroup>
+                        <label>닉네임</label>
+                        <Input
+                          placeholder="nicName"
+                          type="text"
+                          value={nickName}
+                          onChange={chgNickName}
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="8">
                       <FormGroup>
-                        <label htmlFor="exampleInputEmail1">
+                        {/* <label htmlFor="exampleInputEmail1"> */}
+                        <label>
                           Email
                         </label>
-                        <Input id="email" placeholder="Email" type="email"
+                        <Input id="email" placeholder="Email"
                           value={email} onChange={chgEmail}
                         />
                       </FormGroup>

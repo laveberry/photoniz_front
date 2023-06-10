@@ -87,6 +87,7 @@ function Login() {
         localStorage.clear()
         localStorage.setItem('email', res.data.data.email)
         localStorage.setItem('token', res.data.data.token)
+        localStorage.setItem('nickName', res.data.data.nickName)
         // window.location.replace('/')
 
         alert('로그인 성공');

@@ -155,13 +155,14 @@ function DemoNavbar(props) {
                 </p>
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem tag="a">Action</DropdownItem>
-                <DropdownItem tag="a">Another Action</DropdownItem>
-                <DropdownItem tag="a">Something else here</DropdownItem>
+                <DropdownItem tag="a">로그인</DropdownItem>
+                <DropdownItem tag="a">로그아웃</DropdownItem>
+                <DropdownItem tag="a">마이페이지</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <NavItem>
               <Link to={localStorage.getItem("token")==null ? "/admin/login" : "/admin/mypage"} className="nav-link">
+                {localStorage.getItem("nickName")!=null ? localStorage.getItem("nickName") + " 님  " : ""}
                 <i className="now-ui-icons users_single-02" />
                 <p>
                   <span className="d-lg-none d-md-block">Account</span>

@@ -6,7 +6,7 @@ import TableList from "views/TableList.js";
 import Maps from "views/Maps.js";
 import UserPage from "views/UserPage.js";
 import Developer from "views/Developer";
-
+import Photo from "views/Photo.js";
 
 // 사이드바 루트
 var Root = [
@@ -39,8 +39,15 @@ var Root = [
     layout: "/admin"
   },
   {
-    path: "/notifications",
+    path: "/photo",
     name: "사진",
+    icon: "design_image",
+    component: Photo,
+    layout: "/admin"
+  },
+  {
+    path: "/notifications",
+    name: "참조",
     icon: "ui-1_bell-53",
     component: Notifications,
     layout: "/admin"

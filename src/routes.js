@@ -10,7 +10,9 @@ import MyPage from "views/MyPage";
 import Join from "views/Join";
 import Login from "views/Login";
 import Developer from "views/Developer";
+import Photo from "views/Photo.js";
 
+//url 루트 등록
 var dashRoutes = [
   {
     path: "/dashboard",
@@ -35,8 +37,6 @@ var dashRoutes = [
   },
   {
     path: "/notifications",
-    name: "사진",
-    icon: "ui-1_bell-53",
     component: Notifications,
     layout: "/admin"
   },
@@ -94,6 +94,12 @@ var dashRoutes = [
     component: Developer,
     layout: "/admin"
   },
+  {
+    path: "/photo",
+    name: "사진",
+    component: Photo,
+    layout: "/admin"
+  }
 
 ];
 export default dashRoutes;

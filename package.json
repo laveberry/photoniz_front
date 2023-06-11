@@ -17,6 +17,7 @@
     "react-chartjs-2": "3.0.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.2",
+    "react-js-pagination": "^3.0.3",
     "react-notification-alert": "0.0.13",
     "react-redux": "^8.0.7",
     "react-router-dom": "5.2.0",

@@ -14,6 +14,7 @@ import {
 
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function PhotoTable(props) {
   //페이징 시작
@@ -24,7 +25,7 @@ function PhotoTable(props) {
   const [indexOfLastPost, setIndexOfLastPost] = useState(0); // 현재 페이지의 마지막 아이템 인덱스
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(0); // 현재 페이지의 첫번째 아이템 인덱스
   const [currentPosts, setCurrentPosts] = useState(0); // 현재 페이지에서 보여지는 아이템들
-
+  
   //변경 일어날때
   useEffect(() => {
     // axios
@@ -45,6 +46,12 @@ function PhotoTable(props) {
     setCurrentPage(error);
   };
   //페이징 끝
+
+  const history = useHistory();
+  const [mainType, setMainType] = useState("");
+  const onClickWriter = () => {
+    history.push("/admin/writer")
+  }
   
   return (
     <>
@@ -89,6 +96,9 @@ function PhotoTable(props) {
                     })}
                   </tbody>
                 </Table>
+                <button type="submit" onClick={onClickWriter} className="btn btn-primary btn-block btn-info">
+                  글쓰기 
+                </button>
                 <Paging page={currentPage} count={count} setPage={setPage}/>
               </CardBody>
             </Card>

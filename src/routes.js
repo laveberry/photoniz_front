@@ -11,95 +11,24 @@ import Join from "views/Join";
 import Login from "views/Login";
 import Developer from "views/Developer";
 import Photo from "views/Photo.js";
+import Writer from "components/Writer/Writer";
 
-//url 루트 등록
+//url 전체 루트 등록
 var dashRoutes = [
-  {
-    path: "/dashboard",
-    name: "Main",
-    icon: "design_app",
-    component: Dashboard,
-    layout: "/admin"
-  },
-  {
-    path: "/icons",
-    name: "테마",
-    icon: "design_image",
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "모델",
-    icon: "location_map-big",
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    component: Notifications,
-    layout: "/admin"
-  },
-  {
-    path: "/user-page",
-    name: "편집",
-    icon: "users_single-02",
-    component: UserPage,
-    layout: "/admin"
-  },
-  {
-    path: "/extended-tables",
-    name: "Table List",
-    icon: "files_paper",
-    component: TableList,
-    layout: "/admin"
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "design-2_ruler-pencil",
-    component: Typography,
-    layout: "/admin"
-  },
-  // 기타루트
-  {
-    path: "/mypage",
-    name: "마이페이지",
-    component: MyPage,
-    layout: "/admin"
-  },
-  {
-    path: "/join",
-    name: "회원가입",
-    component: Join,
-    layout: "/admin"
-  },  
-  {
-    path: "/login",
-    name: "로그인",
-    component: Login,
-    layout: "/admin"
-  },
-  {
-    pro: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "objects_spaceship",
-    component: Upgrade,
-    layout: "/admin"
-  },  
-  {
-    path: "/developer",
-    name: "개발자",
-    component: Developer,
-    layout: "/admin"
-  },
-  {
-    path: "/photo",
-    name: "사진",
-    component: Photo,
-    layout: "/admin"
-  }
+  { path: "/dashboard", component: Dashboard, layout: "/admin"},
+  { path: "/icons", component: Icons, layout: "/admin"},
+  { path: "/maps", component: Maps, layout: "/admin"},
+  { path: "/notifications", component: Notifications, layout: "/admin"},
+  { path: "/user-page", component: UserPage, layout: "/admin"},
+  { path: "/extended-tables", component: TableList, layout: "/admin"},
+  { path: "/typography", component: Typography, layout: "/admin"},
+  { path: "/mypage", component: MyPage, layout: "/admin" },
+  { path: "/join", component: Join, layout: "/admin"},  
+  { path: "/login", component: Login, layout: "/admin"},
+  { path: "/upgrade", component: Upgrade, layout: "/admin" },  
+  { path: "/developer", component: Developer, layout: "/admin"},
+  { path: "/photo", component: Photo, layout: "/admin"},
+  { path: "/writer", component: Writer, layout: "/admin"}
 
 ];
 export default dashRoutes;

@@ -22,6 +22,7 @@ import {
 
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
+import axios from "axios";
 
 function PhotoWriter(props) {
     const history = useHistory();
@@ -29,8 +30,8 @@ function PhotoWriter(props) {
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [workDropdownOpen, setWorkDropdownOpen] = useState(false);
     
-    const [mainData, setMainData] = useState("사진");
-    const [workData, setWorkData] = useState("셀프웨딩");
+    const [mainData, setMainData] = useState("선택해주세요.");
+    const [workData, setWorkData] = useState("선택해주세요.");
 
     let mainDropData = [
       {val : 'PHOTO', name : '사진'},
@@ -47,14 +48,14 @@ function PhotoWriter(props) {
 
 
     const [board, setBoard] = useState({
+        ...localStorage,
         title: '',
-        createdBy: '',
         content: '',
         mainType : '',
         workType : '',
     });
 
-    const { title, createdBy, content, mainType, workType } = board; //비구조화 할당
+    const { title, content, mainType, workType } = board; //비구조화 할당
 
     //데이터 변화시 확인
     useEffect(() => {
@@ -65,46 +66,28 @@ function PhotoWriter(props) {
       console.log("board" , board); // 변경된 board 값 확인
     }, [board]);
 
+    // 타이틀, 내용 변경시
     const onChange = (e) => {
-        const {value, title} = e.target;
+        const {name, value} = e.target;
         setBoard({ //...은 카피
             ...board,
-            [title]: value
+            [name]: value
         });
     }
-    const saveBoard = async () => {
-    // const saveBoard = () => {
-      setBoard(prevBoard => ({
-        ...prevBoard,
-        title: title,
-        content : content
-      }));
 
-      if(chkValidation()==false){
-        alert(errData);
-        return;
-      }
-
-      await axios.post(`//localhost:8080/board`, board).then((res) => {
-        alert('등록되었습니다.');
-        history.push("/photoniz/photo")
-      });
-
+    const backToList = () => {
+      // navigate('/board');
+      history.push('/photoniz/photo')
     };
-    
-      const backToList = () => {
-        // navigate('/board');
-        history.push('/photoniz/photo')
-      };
 
-      const dropdownToggle = (e, type) => {
-        if(type == 'main') {
-          setDropdownOpen(!dropdownOpen);
-        }else{
-          setWorkDropdownOpen(!workDropdownOpen);
-        }
+    const dropdownToggle = (e, type) => {
+      if(type == 'main') {
+        setDropdownOpen(!dropdownOpen);
+      }else{
+        setWorkDropdownOpen(!workDropdownOpen);
+      }
         
-      };
+    };
 
       const setMainDrop = (data) => {
         for(let i=0 ; i< mainDropData.length ; i++){
@@ -134,32 +117,69 @@ function PhotoWriter(props) {
 
       //유효성 체크
       const chkValidation = () => {
-        if(board.title == '') {
+        if(board.mainType==''){
+          errData = '카테고리를 선택해주세요.';
+          return false;
+        }else if(board.workType==''){
+          errData = '작업유형을 선택해주세요';
+          return false;
+        }else if(board.title == '') {
           errData = '제목을 입력해주세요.';
           return false;
         }else if(board.content == ''){
           errData = '내용을 입력해주세요.';
           return false;
-        }else if(board.mainType==''){
-          errData = '카테고리를 선택해주세요.';
-          return false;
-        }else if(board.workType==''){
-          errorData = '작업유형을 선택해주세요';
-          return false;
         }
         return true;
       }
-      const [isDropdownView, setDropdownView] = useState(false)
+      // const [isDropdownView, setDropdownView] = useState(false)
 
-      const handleClickContainer = () => {
-        setDropdownView(!isDropdownView)
-      }
+      // const handleClickContainer = () => {
+      //   setDropdownView(!isDropdownView)
+      // }
     
-      const handleBlurContainer = () => {
-        setTimeout(() => {
-          setDropdownView(false)
-        }, 200);
+      // const handleBlurContainer = () => {
+      //   setTimeout(() => {
+      //     setDropdownView(false)
+      //   }, 200);
+      // }
+
+    //저장
+    const saveBoard = async () => {
+
+      if(chkValidation()==false){
+        alert(errData);
+        return;
       }
+
+      await axios(`/v1/photoBoard`, {
+        method : 'POST',
+        data : board,
+        // headers : new Headers()
+        headers : {
+          // "Content-Type" : "application/json",
+          Authorization: localStorage.getItem("token")
+        }
+      }).then((res)=>{
+        console.log("저장 성공결과", res);
+        if(res.request.status == 200){
+          alert("저장 성공");
+          history.push("/photoniz/photo")
+        }
+      }).catch((err)=>{
+        if(err.response.request.status == 401){
+          //TODO : 토큰시간만료로 권한오류일때 업뎃 진행
+        }
+        console.log("err", err);
+
+      })
+      // await axios.post(`/v1/photoBoard`, board).then((res) => {
+      //   console.log(res);
+      //   alert('등록되었습니다.');
+      //   history.push("/photoniz/photo")
+      // });
+
+    };
 
 
   return (
@@ -200,6 +220,7 @@ function PhotoWriter(props) {
                                 // 콜백함수 적용으로 data.val 한개만 넘어가게함
                                 // key를 인덱스 사용시 변경될 수 있으니 고유값 세팅
                                 <DropdownItem onClick={() => setMainDrop(data.val)} key={data.val} tag="a">{data.name}</DropdownItem>
+                                // <DropdownItem onClick={onChange} key={data.val} tag="a" name="mainType" value={data.val}>{data.name}</DropdownItem>
                               )
                             })}
                         </DropdownMenu>
@@ -224,6 +245,7 @@ function PhotoWriter(props) {
                             {workDropData.map((data)=>{
                               return (
                                 <DropdownItem onClick={() => setWorkDrop(data.val)} key={data.val} tag="a">{data.name}</DropdownItem>
+                                // <DropdownItem onClick={onChange} key={data.val} tag="a" name="workType" value={data.val}>{data.name}</DropdownItem>
                               )
                             })}
                         </DropdownMenu>
@@ -239,6 +261,8 @@ function PhotoWriter(props) {
                         <Input
                           placeholder="제목을 입력하세요."
                           type="text"
+                          name="title"
+                          onChange={onChange}
                         />
                       </FormGroup>
                     </Col>
@@ -252,6 +276,7 @@ function PhotoWriter(props) {
                           placeholder="내용을 입력하세요."
                           rows="10"
                           type="textarea"
+                          name="content"
                           value={content}
                           onChange={onChange}
                         />

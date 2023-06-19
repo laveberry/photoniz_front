@@ -23,7 +23,7 @@ import {
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
-function writer(props) {
+function PhotoWriter(props) {
     const history = useHistory();
     let errData = "";
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -309,4 +309,4 @@ function writer(props) {
   );
 }
 
-export default writer;
+export default PhotoWriter;

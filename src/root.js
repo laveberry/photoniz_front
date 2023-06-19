@@ -10,18 +10,25 @@ import Photo from "views/Photo.js";
 
 // 사이드바 루트
 var Root = [
-  {
-    path: "/dashboard",
-    name: "Main",
-    icon: "design_app",
-    component: Dashboard,
-    layout: "/photoniz"
-  },
+  // {
+  //   path: "/dashboard",
+  //   name: "Main",
+  //   icon: "design_app",
+  //   component: Dashboard,
+  //   layout: "/photoniz"
+  // },
   {
     path: "/developer",
     name: "개발자",
     icon: "location_map-big",
     component: Developer,
+    layout: "/photoniz"
+  },
+  {
+    path: "/photo",
+    name: "사진",
+    icon: "design_image",
+    component: Photo,
     layout: "/photoniz"
   },
   {
@@ -36,13 +43,6 @@ var Root = [
     name: "모델",
     icon: "location_map-big",
     component: Maps,
-    layout: "/photoniz"
-  },
-  {
-    path: "/photo",
-    name: "사진",
-    icon: "design_image",
-    component: Photo,
     layout: "/photoniz"
   },
   {

@@ -55,7 +55,7 @@ function Admin(props) {
               />
             );
           })}
-          <Redirect from="/admin" to="/admin/dashboard" />
+          <Redirect from="/photoniz" to="/photoniz/dashboard" />
         </Switch>
         <Footer fluid />
       </div>

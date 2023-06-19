@@ -39,8 +39,8 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path="/admin" render={(props) => <App {...props} />} />
-        <Redirect to="/admin/dashboard" />
+        <Route path="/photoniz" render={(props) => <App {...props} />} />
+        <Redirect to="/photoniz/dashboard" />
       </Switch>
     </BrowserRouter>
   </Provider>

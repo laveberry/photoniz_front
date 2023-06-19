@@ -25,10 +25,12 @@ import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
 function writer(props) {
     const history = useHistory();
+    let errData = "";
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
     const [workDropdownOpen, setWorkDropdownOpen] = useState(false);
     
     const [mainData, setMainData] = useState("사진");
+    const [workData, setWorkData] = useState("셀프웨딩");
 
     let mainDropData = [
       {val : 'PHOTO', name : '사진'},
@@ -58,7 +60,7 @@ function writer(props) {
     useEffect(() => {
       if(localStorage.getItem("token")==null){
         alert("로그인 해주세요.")
-        history.push("/admin/login")
+        history.push("/photoniz/login")
       }
       console.log("board" , board); // 변경된 board 값 확인
     }, [board]);
@@ -71,14 +73,28 @@ function writer(props) {
         });
     }
     const saveBoard = async () => {
-        await axios.post(`//localhost:8080/board`, board).then((res) => {
-          alert('등록되었습니다.');
-          navigate('/board');
-        });
-      };
+    // const saveBoard = () => {
+      setBoard(prevBoard => ({
+        ...prevBoard,
+        title: title,
+        content : content
+      }));
+
+      if(chkValidation()==false){
+        alert(errData);
+        return;
+      }
+
+      await axios.post(`//localhost:8080/board`, board).then((res) => {
+        alert('등록되었습니다.');
+        history.push("/photoniz/photo")
+      });
+
+    };
     
       const backToList = () => {
-        navigate('/board');
+        // navigate('/board');
+        history.push('/photoniz/photo')
       };
 
       const dropdownToggle = (e, type) => {
@@ -103,11 +119,36 @@ function writer(props) {
           }
         }
       }
-
-
       
+      const setWorkDrop = (data) => {
+        for(let i=0 ; i< workDropData.length ; i++){
+          if(workDropData[i].val == data){
+            setWorkData(workDropData[i].name);
+            setBoard(prevBoard => ({
+              ...prevBoard,
+              workType: data
+            }));
+          }
+        }
+      }
 
-
+      //유효성 체크
+      const chkValidation = () => {
+        if(board.title == '') {
+          errData = '제목을 입력해주세요.';
+          return false;
+        }else if(board.content == ''){
+          errData = '내용을 입력해주세요.';
+          return false;
+        }else if(board.mainType==''){
+          errData = '카테고리를 선택해주세요.';
+          return false;
+        }else if(board.workType==''){
+          errorData = '작업유형을 선택해주세요';
+          return false;
+        }
+        return true;
+      }
       const [isDropdownView, setDropdownView] = useState(false)
 
       const handleClickContainer = () => {
@@ -177,13 +218,14 @@ function writer(props) {
                         toggle={(e) => dropdownToggle(e)}
                         >
                         <DropdownToggle caret nav>
-                        <label>셀프웨딩</label>
+                        <label>{workData}</label>
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem tag="a" value="PHOTO">사진</DropdownItem>
-                            <DropdownItem tag="a" value="PAINT">그림</DropdownItem>
-                            <DropdownItem tag="a">마이페이지</DropdownItem>
-                            <DropdownItem tag="a">기타</DropdownItem>
+                            {workDropData.map((data)=>{
+                              return (
+                                <DropdownItem onClick={() => setWorkDrop(data.val)} key={data.val} tag="a">{data.name}</DropdownItem>
+                              )
+                            })}
                         </DropdownMenu>
                         </Dropdown>
                         </UncontrolledDropdown>
@@ -245,12 +287,12 @@ function writer(props) {
                     </Col>
                     <Col className="px-1" md="2">
                       <FormGroup>
-                        <button className="btn btn-warning btn-block btn-round" onClick={backToList}>취소</button>
+                        <button type="button" className="btn btn-warning btn-block btn-round" onClick={backToList}>취소</button>
                       </FormGroup>
                     </Col>
                     <Col className="pl-1" md="2">
                       <FormGroup>
-                        <button className="btn btn-block btn-round btn-info" onClick={saveBoard}>저장</button>
+                        <button type="button" className="btn btn-block btn-round btn-info" onClick={saveBoard}>저장</button>
                       </FormGroup>
                     </Col>
                   </Row>

@@ -15,63 +15,63 @@ var Root = [
     name: "Main",
     icon: "design_app",
     component: Dashboard,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/developer",
     name: "개발자",
     icon: "location_map-big",
     component: Developer,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/icons",
     name: "테마",
     icon: "design_image",
     component: Icons,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/maps",
     name: "모델",
     icon: "location_map-big",
     component: Maps,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/photo",
     name: "사진",
     icon: "design_image",
     component: Photo,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/notifications",
     name: "참조",
     icon: "ui-1_bell-53",
     component: Notifications,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/user-page",
     name: "편집",
     icon: "users_single-02",
     component: UserPage,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/extended-tables",
     name: "Table List",
     icon: "files_paper",
     component: TableList,
-    layout: "/admin"
+    layout: "/photoniz"
   },
   {
     path: "/typography",
     name: "Typography",
     icon: "design-2_ruler-pencil",
     component: Typography,
-    layout: "/admin"
+    layout: "/photoniz"
   }
 
 ];

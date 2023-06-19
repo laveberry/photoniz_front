@@ -103,7 +103,7 @@ function Login() {
 
   
   const clickJoin = (e) => {
-    history.push("/admin/join")
+    history.push("/photoniz/join")
   }
 
   // 좋아요 테스트

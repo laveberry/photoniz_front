@@ -50,7 +50,7 @@ function PhotoTable(props) {
   const history = useHistory();
   const [mainType, setMainType] = useState("");
   const onClickWriter = () => {
-    history.push("/admin/writer")
+    history.push("/photoniz/writer")
   }
   
   return (

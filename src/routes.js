@@ -15,20 +15,20 @@ import Writer from "components/Writer/Writer";
 
 //url 전체 루트 등록
 var dashRoutes = [
-  { path: "/dashboard", component: Dashboard, layout: "/admin"},
-  { path: "/icons", component: Icons, layout: "/admin"},
-  { path: "/maps", component: Maps, layout: "/admin"},
-  { path: "/notifications", component: Notifications, layout: "/admin"},
-  { path: "/user-page", component: UserPage, layout: "/admin"},
-  { path: "/extended-tables", component: TableList, layout: "/admin"},
-  { path: "/typography", component: Typography, layout: "/admin"},
-  { path: "/mypage", component: MyPage, layout: "/admin" },
-  { path: "/join", component: Join, layout: "/admin"},  
-  { path: "/login", component: Login, layout: "/admin"},
-  { path: "/upgrade", component: Upgrade, layout: "/admin" },  
-  { path: "/developer", component: Developer, layout: "/admin"},
-  { path: "/photo", component: Photo, layout: "/admin"},
-  { path: "/writer", component: Writer, layout: "/admin"}
+  { path: "/dashboard", component: Dashboard, layout: "/photoniz"},
+  { path: "/icons", component: Icons, layout: "/photoniz"},
+  { path: "/maps", component: Maps, layout: "/photoniz"},
+  { path: "/notifications", component: Notifications, layout: "/photoniz"},
+  { path: "/user-page", component: UserPage, layout: "/photoniz"},
+  { path: "/extended-tables", component: TableList, layout: "/photoniz"},
+  { path: "/typography", component: Typography, layout: "/photoniz"},
+  { path: "/mypage", component: MyPage, layout: "/photoniz" },
+  { path: "/join", component: Join, layout: "/photoniz"},  
+  { path: "/login", component: Login, layout: "/photoniz"},
+  { path: "/upgrade", component: Upgrade, layout: "/photoniz" },  
+  { path: "/developer", component: Developer, layout: "/photoniz"},
+  { path: "/photo", component: Photo, layout: "/photoniz"},
+  { path: "/writer", component: Writer, layout: "/photoniz"}
 
 ];
 export default dashRoutes;

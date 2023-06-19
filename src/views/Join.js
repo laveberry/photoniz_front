@@ -95,7 +95,7 @@ function Join(
       console.log(res);
       if(res.status==200){
         alert("회원가입 성공. 다시 로그인 해주세요");
-        location.href = "/admin/login";
+        location.href = "/photoniz/login";
       }else{
         alert("회원가입 예외" + res.status);
       }

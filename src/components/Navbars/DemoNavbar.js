@@ -161,7 +161,7 @@ function DemoNavbar(props) {
               </DropdownMenu>
             </Dropdown>
             <NavItem>
-              <Link to={localStorage.getItem("token")==null ? "/admin/login" : "/admin/mypage"} className="nav-link">
+              <Link to={localStorage.getItem("token")==null ? "/photoniz/login" : "/photoniz/mypage"} className="nav-link">
                 {localStorage.getItem("nickName")!=null ? localStorage.getItem("nickName") + " 님  " : ""}
                 <i className="now-ui-icons users_single-02" />
                 <p>

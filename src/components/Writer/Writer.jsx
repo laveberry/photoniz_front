@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import DropDown from "components/Dropdown/Dropdown";
 
 // reactstrap components
 import {
@@ -22,22 +23,49 @@ import {
 // core components
 import PanelHeader from "components/PanelHeader/PanelHeader.js";
 
-function writer() {
+function writer(props) {
     const history = useHistory();
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
+    const [workDropdownOpen, setWorkDropdownOpen] = useState(false);
+    
+    const [mainData, setMainData] = useState("사진");
+
+    let mainDropData = [
+      {val : 'PHOTO', name : '사진'},
+      {val : 'MODEL', name : '모델'},
+      {val : 'EDIT', name : '편집'},
+      {val : 'PAINTING', name : '그림'}
+    ];
+
+    let workDropData = [
+      {val : 'WEDDOING', name : '셀프웨딩'},
+      {val : 'BODY', name : '바디프로필'},
+      {val : 'PERSONAL', name : '개인촬영'}
+    ];
 
 
     const [board, setBoard] = useState({
         title: '',
         createdBy: '',
         content: '',
+        mainType : '',
+        workType : '',
     });
 
-    const { title, createdBy, content } = board; //비구조화 할당
+    const { title, createdBy, content, mainType, workType } = board; //비구조화 할당
+
+    //데이터 변화시 확인
+    useEffect(() => {
+      if(localStorage.getItem("token")==null){
+        alert("로그인 해주세요.")
+        history.push("/admin/login")
+      }
+      console.log("board" , board); // 변경된 board 값 확인
+    }, [board]);
 
     const onChange = (e) => {
         const {value, title} = e.target;
-        setBoard({
+        setBoard({ //...은 카피
             ...board,
             [title]: value
         });
@@ -53,10 +81,44 @@ function writer() {
         navigate('/board');
       };
 
-      const dropdownToggle = (e) => {
-        console.log(e);
-        setDropdownOpen(!dropdownOpen);
+      const dropdownToggle = (e, type) => {
+        if(type == 'main') {
+          setDropdownOpen(!dropdownOpen);
+        }else{
+          setWorkDropdownOpen(!workDropdownOpen);
+        }
+        
       };
+
+      const setMainDrop = (data) => {
+        for(let i=0 ; i< mainDropData.length ; i++){
+          if(mainDropData[i].val == data){
+            setMainData(mainDropData[i].name);
+            //prevBoard : 이전의 board 값
+            //데이터 변경 바로확인을 위해 콜백함수 안에 넣어줌
+            setBoard(prevBoard => ({
+              ...prevBoard,
+              mainType: data
+            }));
+          }
+        }
+      }
+
+
+      
+
+
+      const [isDropdownView, setDropdownView] = useState(false)
+
+      const handleClickContainer = () => {
+        setDropdownView(!isDropdownView)
+      }
+    
+      const handleBlurContainer = () => {
+        setTimeout(() => {
+          setDropdownView(false)
+        }, 200);
+      }
 
 
   return (
@@ -74,42 +136,44 @@ function writer() {
                 <Row>
                     <Col className="pr-1" md="4">
                       <FormGroup>
-                        <label>글쓴이</label>
-                        <Input disabled placeholder="Email" type="text" />
+                        <label>글쓴이</label><br/>
+                        {/* <label>{localStorage.getItem("nickName")}</label> */}
+                        <Input disabled placeholder={localStorage.getItem("nickName")} type="text" />
                       </FormGroup>
                     </Col>
                     <Col className="px-1" md="3">
                       <FormGroup>
-                        <label>메인종류</label>
+                        <label>카테고리</label>
 
                         <UncontrolledDropdown>
                         <Dropdown
                         isOpen={dropdownOpen}
-                        toggle={(e) => dropdownToggle(e)}
+                        toggle={(e) => dropdownToggle(e, 'main')}
                         >
                         <DropdownToggle caret nav>
-                        <label>셀프웨딩</label>
+                        <label>{mainData}</label>
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem tag="a" value="PHOTO">사진</DropdownItem>
-                            <DropdownItem tag="a" value="PAINT">그림</DropdownItem>
-                            <DropdownItem tag="a">마이페이지</DropdownItem>
-                            <DropdownItem tag="a">기타</DropdownItem>
+                            {mainDropData.map((data)=>{
+                              return (
+                                // 콜백함수 적용으로 data.val 한개만 넘어가게함
+                                // key를 인덱스 사용시 변경될 수 있으니 고유값 세팅
+                                <DropdownItem onClick={() => setMainDrop(data.val)} key={data.val} tag="a">{data.name}</DropdownItem>
+                              )
+                            })}
                         </DropdownMenu>
                         </Dropdown>
                         </UncontrolledDropdown>
-
-                        
                       </FormGroup>
                     </Col>
                     <Col className="pl-1" md="4">
                       <FormGroup>
                         <label htmlFor="exampleInputEmail1">
-                          작업종류
+                          작업유형
                         </label>
                         <UncontrolledDropdown>
                         <Dropdown
-                        isOpen={dropdownOpen}
+                        isOpen={workDropdownOpen}
                         toggle={(e) => dropdownToggle(e)}
                         >
                         <DropdownToggle caret nav>

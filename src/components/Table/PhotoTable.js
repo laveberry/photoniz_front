@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from "react";
 import Paging from "components/Paging/Paging";
+import axios from 'axios';
 
 // reactstrap components
 import {
@@ -17,8 +18,9 @@ import PanelHeader from "components/PanelHeader/PanelHeader.js";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function PhotoTable(props) {
+  const [tbody, setTbody] = useState([]);
   //페이징 시작
-  const [products, setProducts] = useState([props.tbody]);  // 리스트에 나타낼 아이템들
+  const [products, setProducts] = useState([tbody]);  // 리스트에 나타낼 아이템들
   const [count, setCount] = useState(props.count); // 아이템 총 개수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지. default 값으로 1
   const [postPerPage] = useState(props.postPerPage); // 한 페이지에 보여질 아이템 수 
@@ -28,6 +30,7 @@ function PhotoTable(props) {
   
   //변경 일어날때
   useEffect(() => {
+    getBoardList(); // 1) 게시글 목록 조회 함수 호출
     // axios
     //   .get("/product-sale-join")
     //   .then((res) => {
@@ -36,11 +39,24 @@ function PhotoTable(props) {
     //   .catch((error) => {
     //     console.log("error", error);
     //   });
+    // console.log(props.tbody)
     setCount(products.length);
     setIndexOfLastPost(currentPage * postPerPage);
     setIndexOfFirstPost(indexOfLastPost - postPerPage);
     setCurrentPosts(products.slice(indexOfFirstPost, indexOfLastPost));
   }, [currentPage, indexOfLastPost, indexOfFirstPost, products, postPerPage]);
+
+  //전체 게시글 조회
+  const getBoardList = async () => {
+    const resp = await (await axios.get(`/v1/photoBoard/list?type=`+props.type)).data;
+    setTbody(resp.data.content);
+    // setPropData({
+    //   ...propData,
+    //   tbody : resp.data.content
+    // })
+    const pngn = resp.pagination;
+    console.log(pngn);
+  };
 
   const setPage = (error) => {
     setCurrentPage(error);
@@ -79,10 +95,29 @@ function PhotoTable(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {props.tbody.map((prop, key) => {
+                    {tbody.map((prop, key) => {
                       return (
                         <tr key={key}>
-                          {prop.data.map((prop, key) => {
+                          <td key={key} className="">
+                            {prop.boardId}
+                          </td>
+                          <td key={key} className="">
+                            {prop.nickName}
+                          </td>
+                          <td key={key} className="">
+                            {prop.title}
+                          </td>
+                          <td key={key} className="">
+                            {prop.location}
+                          </td>
+                          <td key={key} className="">
+                            {prop.boardId}
+                          </td>
+                          <td key={key} className="text-right">
+                            {prop.price}
+                          </td>
+                          
+                          {/* {prop.data.map((prop, key) => {
                             if (key === props.thead.length - 1)
                               return (
                                 <td key={key} className="text-right">
@@ -90,7 +125,7 @@ function PhotoTable(props) {
                                 </td>
                               );
                             return <td key={key}>{prop}</td>;
-                          })}
+                          })} */}
                         </tr>
                       );
                     })}

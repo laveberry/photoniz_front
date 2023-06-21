@@ -22,6 +22,15 @@ import { thead, tbody } from "variables/photo";
 
 function Photo() {
 
+  const [propData, setPropData] = useState({
+    type : 'PHOTO',
+    // tbody : tbody,
+    thead : thead,
+    count : 0,
+    postPerPage : 10,
+    mainType : 'PHOTO'
+  })
+
   //페이징 시작
   // const [products, setProducts] = useState([tbody]);  // 리스트에 나타낼 아이템들
   // const [count, setCount] = useState(0); // 아이템 총 개수
@@ -47,13 +56,13 @@ function Photo() {
   // }, [currentPage, indexOfLastPost, indexOfFirstPost, products, postPerPage]);
 
     //props한번에 전달
-    const propData = {
-      tbody : tbody,
-      thead : thead,
-      count : 0,
-      postPerPage : 10,
-      mainType : 'PHOTO'
-    }
+    // const propData = {
+    //   tbody : tbody,
+    //   thead : thead,
+    //   count : 0,
+    //   postPerPage : 10,
+    //   mainType : 'PHOTO'
+    // }
 
   const setPage = (error) => {
     setCurrentPage(error);

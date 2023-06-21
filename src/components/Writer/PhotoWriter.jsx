@@ -168,7 +168,10 @@ function PhotoWriter(props) {
         }
       }).catch((err)=>{
         if(err.response.request.status == 401){
+          alert("토큰 권한 오류")
           //TODO : 토큰시간만료로 권한오류일때 업뎃 진행
+        }else{
+          alert('기타오류' + err);
         }
         console.log("err", err);
 

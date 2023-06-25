@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from "react";
 import Paging from "components/Paging/Paging";
+import { Link, useLocation } from "react-router-dom";
 import axios from 'axios';
 
 // reactstrap components
@@ -86,7 +87,7 @@ function PhotoTable(props) {
                       {props.thead.map((prop, key) => {
                         if (key === props.thead.length - 1)
                           return (
-                            <th key={key} className="text-right">
+                            <th key={key}  className="text-right">
                               {prop}
                             </th>
                           );
@@ -98,23 +99,19 @@ function PhotoTable(props) {
                     {tbody.map((prop, key) => {
                       return (
                         <tr key={key}>
-                          <td key={key} className="">
+                          <td key={prop.boardId} className="">
                             {prop.boardId}
                           </td>
-                          <td key={key} className="">
+                          <td key={prop.nickName} className="">
                             {prop.nickName}
                           </td>
-                          <td key={key} className="">
-                            {prop.title}
+                          <td key={prop.title} className="">
+                            <Link to={`/photoniz/photoDetail/${prop.boardId}`}>{prop.title}</Link>
                           </td>
-                          <td key={key} className="">
-                            {prop.location}
+                          <td key={prop.location} className="">
+                            {prop.location==undefined ? '미정' : prop.location}
                           </td>
-                          <td key={key} className="">
-                            {prop.boardId}
-                          </td>
-                          <td key={key} className="text-right">
-                            {prop.price}
+                          <td key={prop.price} className="text-right">
                           </td>
                           
                           {/* {prop.data.map((prop, key) => {

@@ -11,7 +11,8 @@ import Join from "views/Join";
 import Login from "views/Login";
 import Developer from "views/Developer";
 import Photo from "views/Photo.js";
-import PhotoWriter from "components/Writer/PhotoWriter";
+import PhotoWriter from "components/Table/PhotoWriter";
+import PhotoDetail from "components/Table/PhotoDetail";
 
 //url 전체 루트 등록
 var dashRoutes = [
@@ -28,7 +29,8 @@ var dashRoutes = [
   { path: "/upgrade", component: Upgrade, layout: "/photoniz" },  
   { path: "/developer", component: Developer, layout: "/photoniz"},
   { path: "/photo", component: Photo, layout: "/photoniz"},
-  { path: "/photoWriter", component: PhotoWriter, layout: "/photoniz"}
+  { path: "/photoWriter", component: PhotoWriter, layout: "/photoniz"},
+  { path: "/photoDetail/:idx", component: PhotoDetail, layout: "/photoniz"}
 
 ];
 export default dashRoutes;

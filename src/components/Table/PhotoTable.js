@@ -112,6 +112,7 @@ function PhotoTable(props) {
                             {prop.location==undefined ? '미정' : prop.location}
                           </td>
                           <td key={prop.price} className="text-right">
+                            {prop.price==undefined ? 'free' : prop.price}
                           </td>
                           
                           {/* {prop.data.map((prop, key) => {

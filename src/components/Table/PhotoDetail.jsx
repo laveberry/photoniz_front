@@ -51,7 +51,7 @@ function PhotoDetail(props) {
 
 
     const getBoardDetail = async () => {
-        await (await axios.get(`/v1/photoBoard/detail/${idx}`)
+        await (await axios.get(`/v1/board/detail/${idx}`)
         .then(res =>{
             console.log(res);    
             const data = res.data.data;        

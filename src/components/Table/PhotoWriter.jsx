@@ -152,7 +152,7 @@ function PhotoWriter(props) {
         return;
       }
 
-      await axios(`/v1/photoBoard`, {
+      await axios(`/v1/board`, {
         method : 'POST',
         data : board,
         // headers : new Headers()
@@ -176,7 +176,7 @@ function PhotoWriter(props) {
         console.log("err", err);
 
       })
-      // await axios.post(`/v1/photoBoard`, board).then((res) => {
+      // await axios.post(`/v1/board`, board).then((res) => {
       //   console.log(res);
       //   alert('등록되었습니다.');
       //   history.push("/photoniz/photo")

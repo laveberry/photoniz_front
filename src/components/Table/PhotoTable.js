@@ -49,14 +49,14 @@ function PhotoTable(props) {
 
   //전체 게시글 조회
   const getBoardList = async () => {
-    const resp = await (await axios.get(`/v1/photoBoard/list?type=`+props.type)).data;
-    setTbody(resp.data.content);
+    const resp = await (await axios.get(`/v1/board/list?type=`+props.type+`&mainType=AUTHOR&workType=`)).data;
+    //setTbody(resp.data.content);
     // setPropData({
     //   ...propData,
     //   tbody : resp.data.content
     // })
-    const pngn = resp.pagination;
-    console.log(pngn);
+    //const pngn = resp.pagination;
+    //console.log(pngn);
   };
 
   const setPage = (error) => {

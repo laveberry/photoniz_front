@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import DropDown from "components/Dropdown/Dropdown";
 
@@ -152,6 +152,11 @@ function PhotoWriter(props) {
         return;
       }
 
+      if(!handleUpload){
+        alert("이미지 업로드 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
+
       await axios(`/v1/board`, {
         method : 'POST',
         data : board,
@@ -183,6 +188,57 @@ function PhotoWriter(props) {
       // });
 
     };
+
+  
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [previewUrls, setPreviewUrls] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [popupImageUrl, setPopupImageUrl] = useState('');
+  const popupRef = useRef();
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const fileArray = Array.from(files);
+
+    setSelectedFiles([...selectedFiles, ...fileArray]);
+
+    const fileUrls = fileArray.map((file) => URL.createObjectURL(file));
+    setPreviewUrls([...previewUrls, ...fileUrls]);
+  };
+
+  const handleUpload = () => {
+    // 업로드 로직을 추가예정
+    // 선택된 파일(selectedFiles)을 서버로 업로드
+
+    // 업로드 후 업로드된 파일을 기존 파일 배열에 추가합니다.
+    setUploadedFiles([...uploadedFiles, ...selectedFiles]);
+
+    // 선택된 파일 배열과 미리보기 URL 배열을 초기화합니다.
+    setSelectedFiles([]);
+    setPreviewUrls([]);
+  };
+
+  const openPopup = (url) => {
+    setPopupImageUrl(url);
+  };
+
+  const closePopup = () => {
+    setPopupImageUrl('');
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        closePopup();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
 
   return (
@@ -276,8 +332,8 @@ function PhotoWriter(props) {
                         <label>내용</label>
                         <Input
                           cols="80"
-                          placeholder="내용을 입력하세요."
-                          rows="10"
+                          placeholder="내용을 작성하세요."
+                          rows="5"
                           type="textarea"
                           name="content"
                           value={content}
@@ -288,26 +344,101 @@ function PhotoWriter(props) {
                   </Row>
 
                   <Row>
-                    <Col className="pr-1" md="6">
-                      <FormGroup>
-                        <label>파일 업로드</label>
-                        <Input
-                          defaultValue="Mike"
-                          placeholder="Company"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="6">
-                      <FormGroup>
-                        <label>Last Name</label>
-                        <Input
-                          defaultValue="Andrew"
-                          placeholder="Last Name"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
+                    <div>
+                      <input type="file" name="file" multiple onChange={handleFileChange} />
+
+                      {previewUrls.length > 0 && (
+                        <div>
+                          {/* <h3>선택된 파일:</h3>
+                          <ul>
+                            {selectedFiles.map((file, index) => (
+                              <li key={index}>{file.name}</li>
+                            ))}
+                          </ul> */}
+
+                          {/* 미리보기 */}
+                          <div className="preview-container">
+                            {previewUrls.map((url, index) => (
+                              <img
+                                key={index}
+                                src={url}
+                                alt={`Preview ${index}`}
+                                onClick={() => openPopup(url)}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {uploadedFiles.length > 0 && (
+                        <div>
+                          <h3>업로드된 파일:</h3>
+                          <ul>
+                            {uploadedFiles.map((file, index) => (
+                              <li key={index}>{file.name}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {popupImageUrl && (
+                        <div className="popup-container">
+                          <div className="popup-content" ref={popupRef}>
+                            <img src={popupImageUrl} alt="Popup" />
+                            <button className="popup-close" onClick={closePopup}>
+                              X
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      <style>
+                        {`
+                          .preview-container {
+                            display: grid;
+                            grid-template-columns: repeat(4, 1fr);
+                            gap: 10px;
+                          }
+
+                          .popup-container {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, 0.5);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                          }
+
+                          .popup-content {
+                            position: relative;
+                            max-width: 90%;
+                            max-height: 90%;
+                            overflow: auto;
+                          }
+
+                          .popup-content img {
+                            display: block;
+                            margin: 0 auto;
+                            max-width: 100%;
+                            max-height: 100%;
+                          }
+
+                          .popup-close {
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            font-size: 18px;
+                            background: none;
+                            border: none;
+                            color: #fff;
+                            cursor: pointer;
+                          }
+                        `}
+                      </style>
+                    </div>
                   </Row>
 
                   <Row>

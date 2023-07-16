@@ -35,7 +35,7 @@ function PhotoWriter(props) {
     const [workData, setWorkData] = useState("선택해주세요.");
 
     let mainDropData = [
-      {val : 'PHOTO', name : '사진'},
+      {val : 'AUTHOR', name : '사진작가'},
       {val : 'MODEL', name : '모델'},
       {val : 'EDIT', name : '편집'},
       {val : 'PAINTING', name : '그림'}
@@ -47,7 +47,12 @@ function PhotoWriter(props) {
       {val : 'PERSONAL', name : '개인촬영'}
     ];
 
-
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [previewUrls, setPreviewUrls] = useState([]);
+    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [popupImageUrl, setPopupImageUrl] = useState('');
+    const popupRef = useRef();
+  
     const [board, setBoard] = useState({
         ...localStorage,
         title: '',
@@ -64,7 +69,7 @@ function PhotoWriter(props) {
         alert("로그인 해주세요.")
         history.push("/photoniz/login")
       }
-      console.log("board" , board); // 변경된 board 값 확인
+      // console.log("board" , board); // 변경된 board 값 확인
     }, [board]);
 
     // 타이틀, 내용 변경시
@@ -116,6 +121,50 @@ function PhotoWriter(props) {
         }
       }
 
+      const handleFileChange = (event) => {
+        const files = event.target.files;
+        const fileArray = Array.from(files);
+    
+        setSelectedFiles([...selectedFiles, ...fileArray]);
+    
+        const fileUrls = fileArray.map((file) => URL.createObjectURL(file));
+        setPreviewUrls([...previewUrls, ...fileUrls]);
+      };
+    
+      const handleUpload = () => {
+        // 업로드 로직을 추가예정
+        // 선택된 파일(selectedFiles)을 서버로 업로드
+    
+        // 업로드 후 업로드된 파일을 기존 파일 배열에 추가합니다.
+        setUploadedFiles([...uploadedFiles, ...selectedFiles]);
+    
+        // 선택된 파일 배열과 미리보기 URL 배열을 초기화합니다.
+        setSelectedFiles([]);
+        setPreviewUrls([]);
+      };
+    
+      const openPopup = (url) => {
+        setPopupImageUrl(url);
+      };
+    
+      const closePopup = () => {
+        setPopupImageUrl('');
+      };
+    
+      useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (popupRef.current && !popupRef.current.contains(event.target)) {
+            closePopup();
+          }
+        };
+    
+        document.addEventListener('mousedown', handleClickOutside);
+    
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+      }, []);
+
       //유효성 체크
       const chkValidation = () => {
         if(board.mainType==''){
@@ -129,6 +178,9 @@ function PhotoWriter(props) {
           return false;
         }else if(board.content == ''){
           errData = '내용을 입력해주세요.';
+          return false;
+        }else if(selectedFiles.length == 0){
+          errData = '최소 1장 이상의 사진을 업로드 해주세요.';
           return false;
         }
         return true;
@@ -153,18 +205,32 @@ function PhotoWriter(props) {
         return;
       }
 
-      if(!handleUpload){
-        alert("이미지 업로드 실패했습니다. 다시 시도해주세요.");
-        return;
+      const formData = new FormData();
+      const frmData = {
+        "title" : title,
+        "content" : content,
+        "mainType" : mainType,
+        "workType" : workType
       }
 
-      await axios(`/v1/board`, {
-        method : 'POST',
-        data : board,
+      // formData.append("multipartFiles", selectedFiles);
+
+      selectedFiles.forEach(image => {
+        formData.append('multipartFiles', image);
+      });
+
+      formData.append("data", new Blob([JSON.stringify(frmData)], {
+        type: "application/json"
+      }));
+
+    console.log("frmData!!!!" , formData.get("data"));
+
+      await axios.post(`/v1/board`, formData, {
         // headers : new Headers()
         headers : {
-          // "Content-Type" : "application/json",
-          Authorization: localStorage.getItem("token")
+          'Content-Type': 'multipart/form-data',
+          Authorization: localStorage.getItem("token"),
+          charset: 'utf-8'
         }
       }).then((res)=>{
         console.log("저장 성공결과", res);
@@ -191,55 +257,7 @@ function PhotoWriter(props) {
     };
 
   
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [previewUrls, setPreviewUrls] = useState([]);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [popupImageUrl, setPopupImageUrl] = useState('');
-  const popupRef = useRef();
-
-  const handleFileChange = (event) => {
-    const files = event.target.files;
-    const fileArray = Array.from(files);
-
-    setSelectedFiles([...selectedFiles, ...fileArray]);
-
-    const fileUrls = fileArray.map((file) => URL.createObjectURL(file));
-    setPreviewUrls([...previewUrls, ...fileUrls]);
-  };
-
-  const handleUpload = () => {
-    // 업로드 로직을 추가예정
-    // 선택된 파일(selectedFiles)을 서버로 업로드
-
-    // 업로드 후 업로드된 파일을 기존 파일 배열에 추가합니다.
-    setUploadedFiles([...uploadedFiles, ...selectedFiles]);
-
-    // 선택된 파일 배열과 미리보기 URL 배열을 초기화합니다.
-    setSelectedFiles([]);
-    setPreviewUrls([]);
-  };
-
-  const openPopup = (url) => {
-    setPopupImageUrl(url);
-  };
-
-  const closePopup = () => {
-    setPopupImageUrl('');
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        closePopup();
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  
 
 
   return (
@@ -346,7 +364,7 @@ function PhotoWriter(props) {
 
                   <Row>
                     <div>
-                      <input type="file" name="file" multiple onChange={handleFileChange} />
+                      <input type="file" name="file" multiple accept="image/*" onChange={handleFileChange}  />
 
                       {previewUrls.length > 0 && (
                         <div>

@@ -42,7 +42,7 @@ function PhotoWriter(props) {
     ];
 
     let workDropData = [
-      {val : 'WEDDOING', name : '셀프웨딩'},
+      {val : 'WEDDING', name : '셀프웨딩'},
       {val : 'BODY', name : '바디프로필'},
       {val : 'PERSONAL', name : '개인촬영'}
     ];
@@ -209,6 +209,7 @@ function PhotoWriter(props) {
       const frmData = {
         "title" : title,
         "content" : content,
+        "type" : 'PHOTO',
         "mainType" : mainType,
         "workType" : workType
       }
@@ -222,8 +223,6 @@ function PhotoWriter(props) {
       formData.append("data", new Blob([JSON.stringify(frmData)], {
         type: "application/json"
       }));
-
-    console.log("frmData!!!!" , formData.get("data"));
 
       await axios.post(`/v1/board`, formData, {
         // headers : new Headers()

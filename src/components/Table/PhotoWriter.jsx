@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import DropDown from "components/Dropdown/Dropdown";
+import { mainDropData, workDropData } from "variables/photo";
 import "./table.css";
 
 // reactstrap components
@@ -33,19 +33,6 @@ function PhotoWriter(props) {
     
     const [mainData, setMainData] = useState("선택해주세요.");
     const [workData, setWorkData] = useState("선택해주세요.");
-
-    let mainDropData = [
-      {val : 'AUTHOR', name : '사진작가'},
-      {val : 'MODEL', name : '모델'},
-      {val : 'EDIT', name : '편집'},
-      {val : 'PAINTING', name : '그림'}
-    ];
-
-    let workDropData = [
-      {val : 'WEDDING', name : '셀프웨딩'},
-      {val : 'BODY', name : '바디프로필'},
-      {val : 'PERSONAL', name : '개인촬영'}
-    ];
 
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [previewUrls, setPreviewUrls] = useState([]);

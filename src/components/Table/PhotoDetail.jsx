@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { mainDropData, workDropData, setBoard } from "variables/photo";
 
 import {
   Button,
@@ -21,29 +22,15 @@ function PhotoDetail(props) {
     const {idx} = useParams();
     // const [writer, setWriter] = useState("");
 
-    let mainDropData = [
-      {val : 'PHOTO', name : '사진'},
-      {val : 'MODEL', name : '모델'},
-      {val : 'EDIT', name : '편집'},
-      {val : 'PAINTING', name : '그림'}
-    ];
-
-    let workDropData = [
-      {val : 'WEDDOING', name : '셀프웨딩'},
-      {val : 'BODY', name : '바디프로필'},
-      {val : 'PERSONAL', name : '개인촬영'}
-    ];
-
-
     const [board, setBoard] = useState({
-        writer: '',
-        title: '',
-        content: '',
-        mainType : '',
-        workType : '',
-    });
+      writer: '',
+      title: '',
+      content: '',
+      mainType : '',
+      workType : '',
+  });
 
-    const { writer, title, content,  mainType, workType } = board; //비구조화 할당
+  const { writer, title, content,  mainType, workType } = board; //비구조화 할당
 
     useEffect(() => {
         getBoardDetail();

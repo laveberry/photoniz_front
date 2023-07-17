@@ -37,6 +37,20 @@ const tasks = [
     }
     
   ];
+
+  export const mainDropData = [
+    {val : 'AUTHOR', name : '사진작가'},
+    {val : 'MODEL', name : '모델'},
+    {val : 'EDIT', name : '편집'},
+    {val : 'PAINTING', name : '그림'}
+  ];
+
+  export const workDropData = [
+    {val : 'WEDDING', name : '셀프웨딩'},
+    {val : 'BODY', name : '바디프로필'},
+    {val : 'PERSONAL', name : '개인촬영'}
+  ];
+  
   
   // tasks list for Tasks card in Dashboard view
   // data for <thead> of table in TableList view

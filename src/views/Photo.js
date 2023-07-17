@@ -28,7 +28,8 @@ function Photo() {
     thead : thead,
     count : 0,
     postPerPage : 10,
-    mainType : 'PHOTO'
+    mainType : '',
+    workType : ''
   })
 
   //페이징 시작

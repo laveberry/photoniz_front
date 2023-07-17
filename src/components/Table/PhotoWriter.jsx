@@ -142,6 +142,17 @@ function PhotoWriter(props) {
         setSelectedFiles([]);
         setPreviewUrls([]);
       };
+
+      //이미지 삭제 기능
+      const handleDelete = (index) => {
+        const updatedFiles = [...selectedFiles];
+        updatedFiles.splice(index, 1);
+        setSelectedFiles(updatedFiles);
+    
+        const updatedUrls = [...previewUrls];
+        updatedUrls.splice(index, 1);
+        setPreviewUrls(updatedUrls);
+      };    
     
       const openPopup = (url) => {
         setPopupImageUrl(url);
@@ -377,12 +388,17 @@ function PhotoWriter(props) {
                           {/* 미리보기 */}
                           <div className="preview-container">
                             {previewUrls.map((url, index) => (
-                              <img
-                                key={index}
-                                src={url}
-                                alt={`Preview ${index}`}
-                                onClick={() => openPopup(url)}
-                              />
+                              <div key={index} className="preview-item">
+                                <Button className="delete-button" onClick={() => handleDelete(index)}>
+                                  삭제
+                                </Button>
+                                <img
+                                  key={index}
+                                  src={url}
+                                  alt={`Preview ${index}`}
+                                  onClick={() => openPopup(url)}
+                                />
+                              </div>
                             ))}
                           </div>
                         </div>

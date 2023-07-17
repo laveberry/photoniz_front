@@ -40,3 +40,7 @@
     color: #fff;
     cursor: pointer;
   }
+
+  .delete-button {
+    /* 삭제버튼 css 추가예정 */
+  }
